@@ -23,12 +23,12 @@
 			<!-- <scope>test</scope> -->
 		</dependency>
 
-<dependency>
-  <groupId>junit</groupId>
-  <artifactId>junit</artifactId>
-  <version>4.13</version>
-  <scope>test</scope>
-</dependency>
+<!--		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 		<dependency>
