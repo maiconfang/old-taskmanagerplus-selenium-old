@@ -3,18 +3,30 @@ package com.taskmanagerplus.tests;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.taskmanagerplus.pages.InitialPage;
 import com.taskmanagerplus.pages.LoginPage;
 import com.taskmanagerplus.pages.DashboardPage;
 import com.taskmanagerplus.reports.ExtentReportManager;
+import com.taskmanagerplus.utils.ExcelUtils;
 import com.aventstack.extentreports.Status;
 import com.taskmanagerplus.config.ConfigReader;
 
 import java.time.Duration;
 
 public class LoginTest extends BaseTest {
+
+    private ExcelUtils excelUtils;
+
+    @BeforeClass
+    public void setUpClass() {
+        // Initialize ExcelUtils with the path to the LoginCredentials.xlsx file
+        excelUtils = new ExcelUtils("testdata/LoginCredentials.xlsx");
+        System.out.println("ExcelUtils initialized with file: testdata/LoginCredentials.xlsx");
+        excelUtils.printFilePath();
+    }
 
     @Test
     public void testLogin() {
@@ -30,9 +42,13 @@ public class LoginTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         ExtentReportManager.getTest().log(Status.INFO, "Login page loaded successfully");
 
+        // Read credentials from Excel file
+        String username = excelUtils.getCellDataByColumnName("LoginCredentials", 1, "Username");
+        String password = excelUtils.getCellDataByColumnName("LoginCredentials", 1, "Password");
+
         ExtentReportManager.getTest().log(Status.INFO, "Entering login credentials");
-        loginPage.enterLogin("luna.moon@maif.com");
-        loginPage.enterPassword("123");
+        loginPage.enterLogin(username);
+        loginPage.enterPassword(password);
 
         ExtentReportManager.getTest().log(Status.INFO, "Clicking the login button");
         loginPage.clickLoginButton();

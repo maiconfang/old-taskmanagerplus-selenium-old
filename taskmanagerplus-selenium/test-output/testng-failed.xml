@@ -8,6 +8,8 @@
           <include name="tearDown"/>
           <include name="setUp"/>
           <include name="testLogin"/>
+          <include name="setUpClass"/>
+          <include name="beforeSuite"/>
         </methods>
       </class> <!-- com.taskmanagerplus.tests.LoginTest -->
     </classes>
