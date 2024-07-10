@@ -1,3 +1,14 @@
+package com.taskmanagerplus.tests;
+
+import com.taskmanagerplus.drivers.DriverFactory;
+import com.taskmanagerplus.reports.ExtentReportManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import java.time.Duration;
+
 /**
  * Base class for all test classes in the Task Manager Plus application.
  * 
@@ -24,20 +35,9 @@
  * Date: 2024-07-09
  * Version: 1.0
  */
-package com.taskmanagerplus.tests;
-
-import com.taskmanagerplus.drivers.DriverFactory;
-import com.taskmanagerplus.reports.ExtentReportManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import java.time.Duration;
-
 @Listeners(com.taskmanagerplus.listeners.TestListener.class)
 public class BaseTest {
-    protected WebDriver driver;
+    public WebDriver driver;
     protected WebDriverWait wait;
 
     /**
@@ -55,7 +55,7 @@ public class BaseTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Initialize ExtentReports before creating the test
-        ExtentReportManager.getInstance();
+        ExtentReportManager.getInstance(driver);
         ExtentReportManager.createTest(getClass().getSimpleName());
     }
 

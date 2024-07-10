@@ -1,3 +1,12 @@
+package com.taskmanagerplus.reports;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.taskmanagerplus.utils.EnvironmentUtils;
+import org.openqa.selenium.WebDriver;
+
 /**
  * Manager class for ExtentReports in the Task Manager Plus application.
  * 
@@ -22,13 +31,6 @@
  * Date: 2024-07-09
  * Version: 1.0
  */
-package com.taskmanagerplus.reports;
-
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
-
 public class ExtentReportManager {
     private static ExtentReports extent;
     private static ExtentTest test;
@@ -39,19 +41,22 @@ public class ExtentReportManager {
     /**
      * Gets the singleton instance of ExtentReports.
      * 
+     * @param driver the WebDriver instance
      * @return the singleton instance of {@link ExtentReports}
      */
-    public static synchronized ExtentReports getInstance() {
+    public static synchronized ExtentReports getInstance(WebDriver driver) {
         if (extent == null) {
-            createInstance();
+            createInstance(driver);
         }
         return extent;
     }
 
     /**
      * Creates a new instance of ExtentReports and configures the reporter.
+     * 
+     * @param driver the WebDriver instance
      */
-    private static void createInstance() {
+    private static void createInstance(WebDriver driver) {
         htmlReporter = new ExtentSparkReporter(reportFilePath);
         htmlReporter.config().setTheme(Theme.STANDARD);
         htmlReporter.config().setDocumentTitle("Automation Test Report");
@@ -60,8 +65,11 @@ public class ExtentReportManager {
 
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
-        extent.setSystemInfo("OS", System.getProperty("os.name"));
-        extent.setSystemInfo("Browser", "Chrome");
+
+        // Adding environment information
+        extent.setSystemInfo("OS", EnvironmentUtils.getOS());
+        extent.setSystemInfo("Browser", EnvironmentUtils.getBrowserName(driver));
+        extent.setSystemInfo("Browser Version", EnvironmentUtils.getBrowserVersion(driver));
     }
 
     /**
@@ -71,7 +79,7 @@ public class ExtentReportManager {
      * @return the created {@link ExtentTest} instance
      */
     public static synchronized ExtentTest createTest(String testName) {
-        test = getInstance().createTest(testName);
+        test = getInstance(null).createTest(testName);
         return test;
     }
 
@@ -92,6 +100,6 @@ public class ExtentReportManager {
      * Flushes the ExtentReports instance, writing all logs and information to the report.
      */
     public static synchronized void flush() {
-        getInstance().flush();
+        getInstance(null).flush();
     }
 }

@@ -25,73 +25,78 @@
  */
 package com.taskmanagerplus.listeners;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import com.aventstack.extentreports.Status;
 import com.taskmanagerplus.reports.ExtentReportManager;
+import com.taskmanagerplus.utils.BrowserUtils;
+import com.taskmanagerplus.utils.ScreenshotUtils;
+import com.taskmanagerplus.tests.BaseTest;
 
 public class TestListener implements ITestListener {
-    
-    /**
-     * Invoked each time a test starts.
-     * 
-     * <p>This method creates a new test entry in ExtentReports and logs the start of the test.</p>
-     * 
-     * @param result the result of the test that is starting
-     */
+
     @Override
     public void onTestStart(ITestResult result) {
         ExtentReportManager.createTest(result.getMethod().getMethodName());
         ExtentReportManager.getTest().log(Status.INFO, "Test started: " + result.getMethod().getMethodName());
     }
 
-    /**
-     * Invoked each time a test succeeds.
-     * 
-     * <p>This method logs the success of the test in ExtentReports.</p>
-     * 
-     * @param result the result of the test that succeeded
-     */
     @Override
     public void onTestSuccess(ITestResult result) {
         ExtentReportManager.getTest().log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
     }
 
-    /**
-     * Invoked each time a test fails.
-     * 
-     * <p>This method logs the failure of the test in ExtentReports, including the throwable that caused the failure.</p>
-     * 
-     * @param result the result of the test that failed
-     */
     @Override
     public void onTestFailure(ITestResult result) {
+        WebDriver driver = ((BaseTest) result.getInstance()).driver;
+        
         ExtentReportManager.getTest().log(Status.FAIL, "Test failed: " + result.getMethod().getMethodName());
         ExtentReportManager.getTest().log(Status.FAIL, result.getThrowable());
+
+        // Capture console logs
+        ExtentReportManager.getTest().log(Status.INFO, "Console Logs: ");
+        BrowserUtils.captureConsoleLogs(driver);
+
+        // Capture screenshot
+        String screenshotPath = ScreenshotUtils.takeScreenshot(driver, result.getMethod().getMethodName());
+        ExtentReportManager.getTest().addScreenCaptureFromPath(screenshotPath, "Test Failure Screenshot");
+
+        // Adds the page source to the report
+        try {
+            String pageSourcePath = "test-output/pagesource-" + result.getMethod().getMethodName() + ".html";
+            Files.write(new File(pageSourcePath).toPath(), driver.getPageSource().getBytes());
+            ExtentReportManager.getTest().log(Status.INFO, "Page Source at failure: ").addScreenCaptureFromPath(pageSourcePath);
+        } catch (IOException e) {
+            ExtentReportManager.getTest().log(Status.WARNING, "Failed to save page source: " + e.getMessage());
+        }
     }
 
-    /**
-     * Invoked each time a test is skipped.
-     * 
-     * <p>This method logs the skipping of the test in ExtentReports.</p>
-     * 
-     * @param result the result of the test that was skipped
-     */
     @Override
     public void onTestSkipped(ITestResult result) {
         ExtentReportManager.getTest().log(Status.SKIP, "Test skipped: " + result.getMethod().getMethodName());
     }
 
-    /**
-     * Invoked each time a test fails but is within the success percentage specified.
-     * 
-     * <p>This method is not commonly used, so it is left empty.</p>
-     * 
-     * @param result the result of the test that failed but is within the success percentage
-     */
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         // This method is not commonly used.
+    }
+
+    @Override
+    public void onStart(ITestContext context) {
+        // Do nothing
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+        // Do nothing
     }
 }

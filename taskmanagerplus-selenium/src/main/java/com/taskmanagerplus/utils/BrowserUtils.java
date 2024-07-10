@@ -22,6 +22,24 @@
  */
 package com.taskmanagerplus.utils;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import com.aventstack.extentreports.Status;
+
+import com.taskmanagerplus.reports.ExtentReportManager;
+
+import java.util.Date;
+
 public class BrowserUtils {
-    // Future utility methods for browser-related operations will be added here.
+    public static void captureConsoleLogs(WebDriver driver) {
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+        for (LogEntry entry : logEntries) {
+            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            // Add logs to the report
+            ExtentReportManager.getTest().log(Status.INFO, new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+        }
+    }
 }
+
