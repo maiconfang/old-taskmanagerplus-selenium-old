@@ -1,3 +1,10 @@
+package com.taskmanagerplus.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 /**
  * Page object class for the login page in the Task Manager Plus application.
  * 
@@ -21,13 +28,6 @@
  * Date: 2024-07-09
  * Version: 1.0
  */
-package com.taskmanagerplus.pages;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
 public class LoginPage {
     WebDriver driver;
 
@@ -39,6 +39,15 @@ public class LoginPage {
 
     @FindBy(id = "login_submit") // ID of the login button
     WebElement loginButton;
+
+    @FindBy(id = "toast-container")
+    WebElement errorMessage;
+
+    @FindBy(id = "error-messages") // ID of the error message container
+    WebElement loginErrorMessage;
+
+    @FindBy(id = "error-messages") // ID of the error message container
+    WebElement passwordErrorMessage;
 
     /**
      * Constructor to initialize the WebDriver and page elements.
@@ -76,5 +85,68 @@ public class LoginPage {
      */
     public void clickLoginButton() {
         loginButton.click();
+    }
+    
+    /**
+     * Checks if the login button is enabled.
+     * 
+     * @return true if the login button is enabled, false otherwise
+     */
+    public boolean isLoginButtonEnabled() {
+        return loginButton.isEnabled();
+    }
+
+    /**
+     * Gets the error message element.
+     * 
+     * @return the error message WebElement
+     */
+    public WebElement getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     * Checks if the error message is displayed.
+     * 
+     * @return true if the error message is displayed, false otherwise
+     */
+    public boolean isErrorMessageDisplayed() {
+        return errorMessage.isDisplayed();
+    }
+
+    /**
+     * Gets the login error message element.
+     * 
+     * @return the login error message WebElement
+     */
+    public WebElement getLoginErrorMessage() {
+        return loginErrorMessage;
+    }
+
+    /**
+     * Gets the password error message element.
+     * 
+     * @return the password error message WebElement
+     */
+    public WebElement getPasswordErrorMessage() {
+        return passwordErrorMessage;
+    }
+
+    /**
+     * Checks if the login error message is displayed.
+     * 
+     * @return true if the login error message is displayed, false otherwise
+     */
+    public boolean isLoginErrorMessageDisplayed() {
+        return loginErrorMessage.isDisplayed();
+    }
+
+    /**
+     * Checks if the password error message is displayed.
+     * 
+     * @return true if the password error message is displayed, false otherwise
+     */
+    public boolean isPasswordErrorMessageDisplayed() {
+        return passwordErrorMessage.isDisplayed();
     }
 }

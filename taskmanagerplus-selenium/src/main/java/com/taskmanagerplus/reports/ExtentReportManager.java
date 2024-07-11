@@ -8,6 +8,28 @@ import com.taskmanagerplus.utils.EnvironmentUtils;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Utility class for managing ExtentReports in the Task Manager Plus application.
+ * 
+ * <p>This class provides methods to set up and manage ExtentReports, create test entries,
+ * and retrieve the current test instance. It also adds environment information to the report.</p>
+ * 
+ * <p>Example usage:</p>
+ * <pre>
+ * {@code
+ * ExtentReportManager.setUp();
+ * ExtentTest test = ExtentReportManager.createTest("Test Name");
+ * test.log(Status.INFO, "This is a log message.");
+ * ExtentReportManager.flush();
+ * }
+ * </pre>
+ * 
+ * <p><b>Note:</b> This class uses a singleton pattern to ensure only one instance of ExtentReports is created.</p>
+ * 
+ * Author: Maicon Fang
+ * Date: 2024-07-10
+ * Version: 1.0
+ */
 public class ExtentReportManager {
     private static ExtentReports extent;
     private static ExtentTest test;

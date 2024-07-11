@@ -1,3 +1,10 @@
+package com.taskmanagerplus.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 /**
  * Page object class for the dashboard page in the Task Manager Plus application.
  * 
@@ -20,13 +27,6 @@
  * Date: 2024-07-09
  * Version: 1.0
  */
-package com.taskmanagerplus.pages;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
 public class DashboardPage {
     WebDriver driver;
 

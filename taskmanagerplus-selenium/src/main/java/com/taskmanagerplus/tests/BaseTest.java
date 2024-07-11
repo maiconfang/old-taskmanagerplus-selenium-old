@@ -10,6 +10,32 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import java.time.Duration;
 
+/**
+ * Base test class for the Task Manager Plus application.
+ * 
+ * <p>This class provides common setup and teardown methods for all test classes,
+ * including initializing the WebDriver, setting up ExtentReports, and managing WebDriverWait.</p>
+ * 
+ * <p>Example usage:</p>
+ * <pre>
+ * {@code
+ * public class LoginTest extends BaseTest {
+ *     @Test
+ *     public void testLogin() {
+ *         // Test code here
+ *     }
+ * }
+ * }
+ * </pre>
+ * 
+ * <p><b>Note:</b> This class uses TestNG annotations to manage test lifecycle events
+ * and is designed to be extended by specific test classes.</p>
+ * 
+ * Author: Maicon Fang
+ * Date: 2024-07-11
+ * Version: 1.0
+ */
+
 @Listeners(com.taskmanagerplus.listeners.TestListener.class)
 public class BaseTest {
     public WebDriver driver;

@@ -29,8 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -38,9 +36,9 @@ import org.testng.ITestResult;
 
 import com.aventstack.extentreports.Status;
 import com.taskmanagerplus.reports.ExtentReportManager;
+import com.taskmanagerplus.tests.BaseTest;
 import com.taskmanagerplus.utils.BrowserUtils;
 import com.taskmanagerplus.utils.ScreenshotUtils;
-import com.taskmanagerplus.tests.BaseTest;
 
 public class TestListener implements ITestListener {
 

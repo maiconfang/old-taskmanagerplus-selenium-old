@@ -1,3 +1,5 @@
+package com.taskmanagerplus.webdriver;
+
 /**
  * Utility class for managing WebDriver instances in the Task Manager Plus application.
  * 
@@ -19,7 +21,6 @@
  * Date: 2024-07-09
  * Version: 1.0
  */
-package com.taskmanagerplus.webdriver;
 
 public class WebDriverManager {
     // Future utility methods for managing WebDriver instances will be added here.

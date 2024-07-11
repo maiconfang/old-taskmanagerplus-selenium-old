@@ -6,8 +6,8 @@
       <class name="com.taskmanagerplus.tests.LoginTest">
         <methods>
           <include name="tearDown"/>
+          <include name="testLoginWithEmptyCredentials"/>
           <include name="setUp"/>
-          <include name="testLogin"/>
           <include name="setUpClass"/>
           <include name="beforeSuite"/>
         </methods>

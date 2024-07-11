@@ -1,3 +1,8 @@
+package com.taskmanagerplus.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+
 /**
  * Base class for all page objects in the Task Manager Plus application.
  * 
@@ -25,11 +30,6 @@
  * Date: 2024-07-09
  * Version: 1.0
  */
-package com.taskmanagerplus.pages;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
-
 public class BasePage {
     protected WebDriver driver;
 
